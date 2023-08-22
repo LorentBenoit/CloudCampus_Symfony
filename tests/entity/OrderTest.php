@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\Entity\Order;
 
 class OrderTest extends KernelTestCase {
 
@@ -11,7 +12,7 @@ class OrderTest extends KernelTestCase {
         $order->setUserId(1);
 
         $this->assertEquals(2, $order->getNumber());
-        $this->assertEquals(100, $order->getPrice());
+        $this->assertEquals(100, $order->getTotalPrice());
         $this->assertEquals(1, $order->getUserId());
     }
 }

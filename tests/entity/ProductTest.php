@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\Entity\Product;
 
 class ProductTest extends KernelTestCase {
 
