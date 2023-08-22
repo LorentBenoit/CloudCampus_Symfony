@@ -79,7 +79,8 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "test": "php bin/phpunit"
+        "test": "php bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html tests_coverage"
     },
     "conflict": {
         "symfony/symfony": "*"
