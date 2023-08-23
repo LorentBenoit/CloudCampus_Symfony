@@ -3,6 +3,7 @@
 namespace App\Tests;
 
 use App\Service\Calculator;
+use App\Entity\Product;
 use PHPUnit\Framework\TestCase;
 
 class CalculatorTest extends TestCase
@@ -42,7 +43,7 @@ class CalculatorTest extends TestCase
     {
         $calculator = new Calculator();
 
-        $totalHT = 65;
+        $totalHT = $this->getProducts();
 
         $tva = 20;
 

@@ -10,14 +10,17 @@ class Calculator
         $totalHT = 0;
 
         foreach ($products as $product) {
-            $totalHT += $product['product']->$price * $product['quantity'];
+            $totalHT += $product['product']->getPrice() * $product['quantity'];
         }
-
+        
         return $totalHT;
+    
     }
 
-    public function getTotalTTC($totalHT, $tva)
+    public function getTotalTTC($products, $tva)
     {
+        $totalHT = $this->getTotalHT($products);
+
         $totalTTC = $totalHT * (1 + $tva / 100);
 
         return $totalTTC;
