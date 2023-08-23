@@ -13,11 +13,8 @@ class InvoiceTest extends KernelTestCase
         $emailService = $this->getMockBuilder(EmailService::class)
             ->getMock();
 
-        $emailService->method('send')
+        $emailService->expects($this->once())->method('send')
             ->willReturn(true);
-
-        $emailService->expects($this->once())
-            ->method('send');
 
         $invoice = new Invoice($emailService);
 
