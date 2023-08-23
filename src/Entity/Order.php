@@ -20,8 +20,9 @@ class Order
     #[ORM\Column]
     private ?int $totalprice = null;
 
-    #[ORM\Column]
-    private ?int $userid = null;
+    #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $userid = null;
 
     public function getId(): ?int
     {
@@ -52,12 +53,12 @@ class Order
         return $this;
     }
 
-    public function getUserid(): ?int
+    public function getUserid(): ?User
     {
         return $this->userid;
     }
 
-    public function setUserid(int $userid): static
+    public function setUserid(?User $userid): static
     {
         $this->userid = $userid;
 
