@@ -16,6 +16,9 @@ class InvoiceTest extends KernelTestCase
         $emailService->method('send')
             ->willReturn(true);
 
+        $emailService->expects($this->once())
+            ->method('send');
+
         $invoice = new Invoice($emailService);
 
         $recipientEmail = 'client@example.com';
