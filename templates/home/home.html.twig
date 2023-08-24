@@ -3,7 +3,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{% if user %}
+{% if app.user %}
     <h1>Vous êtes connecté.</h1>
     <a href="{{ path('app_logout') }}">Se déconnecter</a>
 {% else %}

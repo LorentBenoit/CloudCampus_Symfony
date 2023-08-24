@@ -14,7 +14,6 @@ class HomeController extends AbstractController
     {
         $user = $security->getUser();
 
-            return $this->render('home/home.html.twig', array(
-                'user' => $user));
+            return $this->render('home/home.html.twig');
     }
 }
