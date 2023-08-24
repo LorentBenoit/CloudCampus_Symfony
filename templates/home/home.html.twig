@@ -1,9 +1,14 @@
-{# templates/home/not_logged_in.html.twig #}
+{# templates/home/home.twig #}
 
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% if user %}
+    <h1>Vous êtes connecté.</h1>
+    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+{% else %}
     <h1>Vous n'êtes pas connecté.</h1>
     <a href="{{ path('app_login') }}">Se connecter</a>
     <a href="{{ path('app_register') }}">S'inscrire</a>
+{% endif %}
 {% endblock %}

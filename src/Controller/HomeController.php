@@ -14,10 +14,7 @@ class HomeController extends AbstractController
     {
         $user = $security->getUser();
 
-        if ($user) {
-            return $this->render('home/logged_in.html.twig');
-        } else {
-            return $this->render('home/not_logged_in.html.twig');
-        }
+            return $this->render('home/home.html.twig', array(
+                'user' => $user));
     }
 }
