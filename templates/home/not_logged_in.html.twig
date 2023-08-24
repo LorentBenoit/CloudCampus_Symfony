@@ -1,0 +1,9 @@
+{# templates/home/not_logged_in.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Vous n'êtes pas connecté.</h1>
+    <a href="{{ path('app_login') }}">Se connecter</a>
+    <a href="{{ path('app_register') }}">S'inscrire</a>
+{% endblock %}
