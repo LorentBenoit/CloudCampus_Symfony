@@ -3,7 +3,6 @@
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
 
 class RegisterTest extends WebTestCase
 {
@@ -26,7 +25,7 @@ class RegisterTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         // Vérifier que la page contient bien le titre
-        $this->assertSelectorTextContains('h1', 'Connexion');
+        $this->assertSelectorTextContains('h1', 'Register');
     }
 
     public function testValidRegister()
@@ -34,15 +33,18 @@ class RegisterTest extends WebTestCase
         $this->client->request('GET', '/register');
 
         // Soumettre le formulaire
-        $this->client->submitForm('login', [
-            '_username' => 'benoitlorent50@gmail.com',
-            '_password' => "azerty123"
+        $this->client->submitForm('Register', [
+            'registration_form[firstname]' => 'John',
+            'registration_form[lastname]' => 'Doe',
+            'registration_form[email]' => 'test@example.com',
+            'registration_form[plainPassword]' => 'password123',
+            'registration_form[agreeTerms]' => true,
         ]);
 
         $this->assertResponseRedirects();
         $this->client->followRedirect();
 
-        $this->assertSelectorTextContains('h1', 'Vous êtes connecté.');
+        $this->assertSelectorTextContains('h1', "Vous n'êtes pas connecté.");
     }
 
     protected function tearDown(): void
