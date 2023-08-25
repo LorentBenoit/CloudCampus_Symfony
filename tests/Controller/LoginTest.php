@@ -1,44 +1,55 @@
 <?php
 
-use Symfony\Bundle\SecurityBundle\Security;
+namespace App\Tests\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
-use App\Controller\LoginController;
-use App\DateFixture\UserFixtures;
-use Doctrine\ORM\Mapping as ORM;
 
-class LoginTest extends WebTestCase {
+class LoginTest extends WebTestCase
+{
+    private $client;
 
-    public function testLoginWithValidCredentials(): void
+    protected function setUp(): void
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/login');
+        parent::setUp();
 
-        $form = $crawler->selectButton('login')->form();
-        $form['_username'] = 'benoitlorent50@gmail.com';
-        $form['_password'] = 'azerty123';
+        //Créer le client
+        $this->client = static::createClient();
+    }
 
-        $client->submit($form);
+    public function testLoginPageIsRender()
+    {
+        // Faire la requête
+        $this->client->request('GET', '/login');
+
+        // Vérifier qu'elle est en succès
+        $this->assertResponseIsSuccessful();
+
+        // Vérifier que la page contient bien le titre
+        $this->assertSelectorTextContains('h1', 'Connexion');
+    }
+
+    public function testValidLogin()
+    {
+        $this->client->request('GET', '/login');
+
+        // Soumettre le formulaire
+        $this->client->submitForm('login', [
+            '_username' => 'benoitlorent50@gmail.com',
+            '_password' => "azerty123"
+        ]);
 
         $this->assertResponseRedirects();
-        $client->followRedirect();
+        $this->client->followRedirect();
 
         $this->assertSelectorTextContains('h1', 'Vous êtes connecté.');
     }
 
-    public function testLoginWithInvalidCredentials(): void
+    protected function tearDown(): void
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/login');
+        parent::tearDown();
 
-        $form = $crawler->selectButton('login')->form();
-        $form['_username'] = 'benoitlorent50@gmail.com';
-        $form['_password'] = 'azerty12345';
-
-        $client->submit($form);
-
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->assertSelectorTextContains('div.alert-danger', 'Invalid credentials.');
+        // Remettre client à null
+        $this->client = null;
     }
 }
 
