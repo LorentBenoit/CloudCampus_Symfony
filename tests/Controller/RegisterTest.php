@@ -45,6 +45,16 @@ class RegisterTest extends WebTestCase
         $this->client->followRedirect();
 
         $this->assertSelectorTextContains('h1', "Vous n'êtes pas connecté.");
+
+        $entityManager = self::$container->get('doctrine.orm.entity_manager');
+
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => 'test@example.com']);
+
+        // Assert that the user exists
+        $this->assertEquals('John', $user->getFirstName);
+        $this->assertEquals('Doe', $user->getLastName);
+        $this->assertEquals('test@example.com', $user->getEmail);
+        $this->assertTrue((password_verify('test@example.com', $user->getPassword)));
     }
 
     protected function tearDown(): void
