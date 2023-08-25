@@ -5,7 +5,7 @@ namespace App\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class LoginTest extends WebTestCase
+class RegisterTest extends WebTestCase
 {
     private $client;
 
@@ -20,7 +20,7 @@ class LoginTest extends WebTestCase
     public function testLoginPageIsRender()
     {
         // Faire la requête
-        $this->client->request('GET', '/login');
+        $this->client->request('GET', '/register');
 
         // Vérifier qu'elle est en succès
         $this->assertResponseIsSuccessful();
@@ -29,9 +29,9 @@ class LoginTest extends WebTestCase
         $this->assertSelectorTextContains('h1', 'Connexion');
     }
 
-    public function testValidLogin()
+    public function testValidRegister()
     {
-        $this->client->request('GET', '/login');
+        $this->client->request('GET', '/register');
 
         // Soumettre le formulaire
         $this->client->submitForm('login', [
@@ -43,22 +43,6 @@ class LoginTest extends WebTestCase
         $this->client->followRedirect();
 
         $this->assertSelectorTextContains('h1', 'Vous êtes connecté.');
-    }
-
-    public function testInvalidLogin()
-    {
-        $crawler = $this->client->request('GET', '/login');
-
-        // Soumettre le formulaire
-        $this->client->submitForm('login', [
-            '_username' => 'benoitlorent50@gmail.com',
-            '_password' => "azerty12345"
-        ]);
-
-        $this->assertResponseRedirects();
-        $this->client->followRedirect();
-
-        $this->assertSelectorTextContains('div', 'Invalid credentials.');
     }
 
     protected function tearDown(): void
